@@ -43,5 +43,6 @@ jobs:
 
       - name: run migrations
         uses: make migrateup
+
       - name: Test
         run: make test
