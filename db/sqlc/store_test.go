@@ -37,6 +37,40 @@ func TestTransferTx(t *testing.T) {
         result := <-results
         require.NotEmpty(t, result)
 
-        // additional checks can be added here
+       //check transfer
+	   transfer := result.Transfer
+	   require.NotZero(t, transfer.ID)
+	   require.Equal(t, account1.ID, transfer.FromAccountID)
+	   require.Equal(t, account2.ID, transfer.ToAccountID)
+	   require.Equal(t, amount, transfer.Amount)
+	   require.NotZero(t, transfer.CreatedAt)
+	   require.NotZero(t, transfer.ID)
+
+	   _, err = store.GetTransfer(context.Background(), transfer.ID)
+	   require.NoError(t, err)
+
+	   //check entries
+	   fromEntry := result.FromEntry
+	   require.NotZero(t, fromEntry)
+	   require.Equal(t, account1.ID, fromEntry.AccountID)
+	   require.Equal(t, -amount, fromEntry.Amount)
+	   require.NotZero(t, fromEntry.CreatedAt)
+	   require.NotZero(t, fromEntry.ID)
+	   require.NotZero(t, fromEntry.CreatedAt)
+
+	   _, err = store.GetEntry(context.Background(), fromEntry.ID)
+	   require.NoError(t, err)
+
+	   toEntry := result.ToEntry
+	   require.NotZero(t, toEntry)
+	   require.Equal(t, account2.ID, toEntry.AccountID)
+	   require.Equal(t, amount, toEntry.Amount)
+	   require.NotZero(t, toEntry.CreatedAt)
+	   require.NotZero(t, toEntry.ID)
+
+	   _, err = store.GetEntry(context.Background(), toEntry.ID)
+	   require.NoError(t, err)
+
+	   //check account's balance
     }
 }
