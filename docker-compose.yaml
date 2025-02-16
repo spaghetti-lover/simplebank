@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=bank-system
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_SOURCE=postgresql://root:root@postgres:5432/bank-system?sslmode=disable
+    depends_on:
+      - postgres
+    entrypoint:
+      [
+        "/bin/sh",
+        "-c",
+        "chmod +x /app/wait-for.sh /app/start.sh && /app/wait-for.sh postgres:5432 -- /app/start.sh /app/main",
+      ]
+    command: ["/app/main"]

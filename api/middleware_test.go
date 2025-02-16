@@ -62,7 +62,7 @@ func TestAuthMiddleware(t *testing.T) {
 		{
 			name: "InvalidAuthorizationFormat",
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
-				addAuthorization(t, request, tokenMaker, "unsupported", "user", time.Minute)
+				addAuthorization(t, request, tokenMaker, "", "user", time.Minute)
 			},
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusUnauthorized, recorder.Code)
