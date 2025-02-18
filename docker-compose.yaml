@@ -14,7 +14,6 @@ services:
       - "8080:8080"
     environment:
       - DB_SOURCE=postgresql://root:root@postgres:5432/bank-system?sslmode=disable
-      - DB_DRIVER=postgres
     depends_on:
       - postgres
     entrypoint:
