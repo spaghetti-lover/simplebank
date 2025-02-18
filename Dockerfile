@@ -18,6 +18,7 @@ COPY wait-for.sh .
 COPY go.mod .
 COPY go.sum .
 COPY db/migration ./migration
+RUN apt-get update && apt-get install -y golang-go
 RUN go mod download
 RUN chmod +x /app/wait-for.sh /app/start.sh
 
