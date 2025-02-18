@@ -15,7 +15,10 @@ COPY --from=builder /app/migrate ./migrate
 COPY app.env .
 COPY start.sh .
 COPY wait-for.sh .
+COPY go.mod .
+COPY go.sum .
 COPY db/migration ./migration
+RUN go mod download
 RUN chmod +x /app/wait-for.sh /app/start.sh
 
 
