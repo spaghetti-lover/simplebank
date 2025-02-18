@@ -3,9 +3,8 @@ FROM golang:1.23.6-alpine3.20 AS builder
 WORKDIR /app
 COPY . .
 RUN go build -o main main.go
-RUN apk add curl
+RUN apk add --no-cache curl
 RUN curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.2/migrate.linux-amd64.tar.gz | tar xvz
-
 
 # Run stage
 FROM alpine:3.13
@@ -18,10 +17,8 @@ COPY wait-for.sh .
 COPY go.mod .
 COPY go.sum .
 COPY db/migration ./migration
-RUN apt-get update && apt-get install -y golang-go
-RUN go mod download
+RUN apk add --no-cache bash
 RUN chmod +x /app/wait-for.sh /app/start.sh
-
 
 EXPOSE 8080
 ENTRYPOINT ["/app/start.sh"]
