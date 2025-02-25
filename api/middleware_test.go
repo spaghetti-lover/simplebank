@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spaghetti-lover/simplebank/token"
 	"github.com/stretchr/testify/require"
-	"github.com/techschool/simplebank/token"
 )
 
 func addAuthorization(
@@ -24,7 +24,7 @@ func addAuthorization(
 	require.NoError(t, err)
 
 	authorizationHeader := fmt.Sprintf("%s %s", authorizationType, token)
-	request.Header.Set(authorizationHeaderKey, authorizationHeader)
+	request.Header.Set("Authorization", authorizationHeader)
 }
 
 func TestAuthMiddleware(t *testing.T) {
@@ -36,7 +36,7 @@ func TestAuthMiddleware(t *testing.T) {
 		{
 			name: "OK",
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
-				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, "user", time.Minute)
+				addAuthorization(t, request, tokenMaker, "Bearer", "user", time.Minute)
 			},
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusOK, recorder.Code)
@@ -45,6 +45,7 @@ func TestAuthMiddleware(t *testing.T) {
 		{
 			name: "NoAuthorization",
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+				// No authorization header added
 			},
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusUnauthorized, recorder.Code)
@@ -71,7 +72,7 @@ func TestAuthMiddleware(t *testing.T) {
 		{
 			name: "ExpiredToken",
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
-				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, "user", -time.Minute)
+				addAuthorization(t, request, tokenMaker, "Bearer", "user", -time.Minute)
 			},
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusUnauthorized, recorder.Code)
@@ -92,7 +93,6 @@ func TestAuthMiddleware(t *testing.T) {
 					ctx.JSON(http.StatusOK, gin.H{})
 				},
 			)
-
 			recorder := httptest.NewRecorder()
 			request, err := http.NewRequest(http.MethodGet, authPath, nil)
 			require.NoError(t, err)

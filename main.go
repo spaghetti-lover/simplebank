@@ -5,9 +5,9 @@ import (
 	"log"
 
 	_ "github.com/lib/pq"
-	"github.com/techschool/simplebank/api"
-	db "github.com/techschool/simplebank/db/sqlc"
-	"github.com/techschool/simplebank/util"
+	"github.com/spaghetti-lover/simplebank/api"
+	db "github.com/spaghetti-lover/simplebank/db/sqlc"
+	"github.com/spaghetti-lover/simplebank/util"
 )
 
 func main() {
@@ -15,7 +15,6 @@ func main() {
 	if err != nil {
 		log.Fatal("cannot load config:", err)
 	}
-
 	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatal("cannot connect to db:", err)

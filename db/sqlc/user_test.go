@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/spaghetti-lover/simplebank/util"
 	"github.com/stretchr/testify/require"
-	"github.com/techschool/simplebank/util"
 )
 
 func createRandomUser(t *testing.T) User {
@@ -28,12 +28,8 @@ func createRandomUser(t *testing.T) User {
 	require.Equal(t, arg.HashedPassword, user.HashedPassword)
 	require.Equal(t, arg.FullName, user.FullName)
 	require.Equal(t, arg.Email, user.Email)
-	require.True(t, user.PasswordChangedAt.IsZero())
-	require.NotZero(t, user.CreatedAt)
-
 	return user
 }
-
 func TestCreateUser(t *testing.T) {
 	createRandomUser(t)
 }

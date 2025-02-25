@@ -14,10 +14,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
 	"github.com/lib/pq"
+	mockdb "github.com/spaghetti-lover/simplebank/db/mock"
+	db "github.com/spaghetti-lover/simplebank/db/sqlc"
+	"github.com/spaghetti-lover/simplebank/util"
 	"github.com/stretchr/testify/require"
-	mockdb "github.com/techschool/simplebank/db/mock"
-	db "github.com/techschool/simplebank/db/sqlc"
-	"github.com/techschool/simplebank/util"
 )
 
 type eqCreateUserParamsMatcher struct {
@@ -169,7 +169,6 @@ func TestCreateUserAPI(t *testing.T) {
 			},
 		},
 	}
-
 	for i := range testCases {
 		tc := testCases[i]
 

@@ -4,7 +4,7 @@
 package db
 
 import (
-	"context"
+    "context"
 )
 
 const createEntry = `-- name: CreateEntry :one
@@ -17,20 +17,20 @@ INSERT INTO entries (
 `
 
 type CreateEntryParams struct {
-	AccountID int64 `json:"account_id"`
-	Amount    int64 `json:"amount"`
+    AccountID int64 `json:"account_id"`
+    Amount    int64 `json:"amount"`
 }
 
 func (q *Queries) CreateEntry(ctx context.Context, arg CreateEntryParams) (Entry, error) {
-	row := q.db.QueryRowContext(ctx, createEntry, arg.AccountID, arg.Amount)
-	var i Entry
-	err := row.Scan(
-		&i.ID,
-		&i.AccountID,
-		&i.Amount,
-		&i.CreatedAt,
-	)
-	return i, err
+    row := q.db.QueryRowContext(ctx, createEntry, arg.AccountID, arg.Amount)
+    var i Entry
+    err := row.Scan(
+        &i.ID,
+        &i.AccountID,
+        &i.Amount,
+        &i.CreatedAt,
+    )
+    return i, err
 }
 
 const getEntry = `-- name: GetEntry :one
@@ -39,15 +39,15 @@ WHERE id = $1 LIMIT 1
 `
 
 func (q *Queries) GetEntry(ctx context.Context, id int64) (Entry, error) {
-	row := q.db.QueryRowContext(ctx, getEntry, id)
-	var i Entry
-	err := row.Scan(
-		&i.ID,
-		&i.AccountID,
-		&i.Amount,
-		&i.CreatedAt,
-	)
-	return i, err
+    row := q.db.QueryRowContext(ctx, getEntry, id)
+    var i Entry
+    err := row.Scan(
+        &i.ID,
+        &i.AccountID,
+        &i.Amount,
+        &i.CreatedAt,
+    )
+    return i, err
 }
 
 const listEntries = `-- name: ListEntries :many
@@ -59,35 +59,32 @@ OFFSET $3
 `
 
 type ListEntriesParams struct {
-	AccountID int64 `json:"account_id"`
-	Limit     int32 `json:"limit"`
-	Offset    int32 `json:"offset"`
+    AccountID int64 `json:"account_id"`
+    Limit     int32 `json:"limit"`
+    Offset    int32 `json:"offset"`
 }
 
 func (q *Queries) ListEntries(ctx context.Context, arg ListEntriesParams) ([]Entry, error) {
-	rows, err := q.db.QueryContext(ctx, listEntries, arg.AccountID, arg.Limit, arg.Offset)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	items := []Entry{}
-	for rows.Next() {
-		var i Entry
-		if err := rows.Scan(
-			&i.ID,
-			&i.AccountID,
-			&i.Amount,
-			&i.CreatedAt,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
+    rows, err := q.db.QueryContext(ctx, listEntries, arg.AccountID, arg.Limit, arg.Offset)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+    items := []Entry{}
+    for rows.Next() {
+        var i Entry
+        if err := rows.Scan(
+            &i.ID,
+            &i.AccountID,
+            &i.Amount,
+            &i.CreatedAt,
+        ); err != nil {
+            return nil, err
+        }
+        items = append(items, i)
+    }
+    if err := rows.Err(); err != nil {
+        return nil, err
+    }
+    return items, nil
 }

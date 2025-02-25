@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	db "github.com/techschool/simplebank/db/sqlc"
-	"github.com/techschool/simplebank/token"
+	db "github.com/spaghetti-lover/simplebank/db/sqlc"
+	"github.com/spaghetti-lover/simplebank/token"
 )
 
 type transferRequest struct {
@@ -24,7 +24,6 @@ func (server *Server) createTransfer(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
-
 	fromAccount, valid := server.validAccount(ctx, req.FromAccountID, req.Currency)
 	if !valid {
 		return
@@ -41,7 +40,6 @@ func (server *Server) createTransfer(ctx *gin.Context) {
 	if !valid {
 		return
 	}
-
 	arg := db.TransferTxParams{
 		FromAccountID: req.FromAccountID,
 		ToAccountID:   req.ToAccountID,
@@ -74,6 +72,5 @@ func (server *Server) validAccount(ctx *gin.Context, accountID int64, currency s
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return account, false
 	}
-
 	return account, true
 }

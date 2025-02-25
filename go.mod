@@ -1,4 +1,4 @@
-module github.com/techschool/simplebank
+module github.com/spaghetti-lover/simplebank
 
 go 1.16
 

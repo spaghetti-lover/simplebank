@@ -13,11 +13,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
+	mockdb "github.com/spaghetti-lover/simplebank/db/mock"
+	db "github.com/spaghetti-lover/simplebank/db/sqlc"
+	"github.com/spaghetti-lover/simplebank/token"
+	"github.com/spaghetti-lover/simplebank/util"
 	"github.com/stretchr/testify/require"
-	mockdb "github.com/techschool/simplebank/db/mock"
-	db "github.com/techschool/simplebank/db/sqlc"
-	"github.com/techschool/simplebank/token"
-	"github.com/techschool/simplebank/util"
 )
 
 func TestGetAccountAPI(t *testing.T) {
@@ -43,6 +43,7 @@ func TestGetAccountAPI(t *testing.T) {
 					Times(1).
 					Return(account, nil)
 			},
+
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusOK, recorder.Code)
 				requireBodyMatchAccount(t, recorder.Body, account)
@@ -130,14 +131,12 @@ func TestGetAccountAPI(t *testing.T) {
 
 	for i := range testCases {
 		tc := testCases[i]
-
 		t.Run(tc.name, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
 			store := mockdb.NewMockStore(ctrl)
 			tc.buildStubs(store)
-
 			server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
 
