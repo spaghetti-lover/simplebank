@@ -11,8 +11,6 @@ INSERT INTO users (
 -- name: GetUser :one
 SELECT * FROM users
 WHERE username = $1 LIMIT 1;
-<<<<<<< HEAD
-=======
 
 -- name: UpdateUser :one
 UPDATE users
@@ -25,4 +23,3 @@ SET
 WHERE
   username = sqlc.arg(username)
 RETURNING *;
->>>>>>> d4d0e58 (refactor)

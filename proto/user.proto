@@ -1,25 +1,10 @@
 syntax = "proto3";
 
-<<<<<<< HEAD
-package db;
-
-import "google/protobuf/timestamp.proto";
-option go_package = "github.com/spaghetti-lover/simplebank/pb";
-
-
-message User {
-  string username  = 1;
-  string fullname = 2;
-  string email = 3;
-  google.protobuf.Timestamp password_changed_at = 4;
-  google.protobuf.Timestamp created_at = 5;
-}
-=======
 package pb;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/spaghetti-lover/simplebank/pb";
+option go_package = "github.com/techschool/simplebank/pb";
 
 message User {
     string username = 1;
@@ -28,4 +13,3 @@ message User {
     google.protobuf.Timestamp password_changed_at = 4;
     google.protobuf.Timestamp created_at = 5;
 }
->>>>>>> d4d0e58 (refactor)

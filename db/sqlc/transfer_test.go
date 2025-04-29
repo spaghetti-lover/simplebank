@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/spaghetti-lover/simplebank/util"
 	"github.com/stretchr/testify/require"
+	"github.com/techschool/simplebank/util"
 )
 
 func createRandomTransfer(t *testing.T, account1, account2 Account) Transfer {
@@ -16,11 +16,7 @@ func createRandomTransfer(t *testing.T, account1, account2 Account) Transfer {
 		Amount:        util.RandomMoney(),
 	}
 
-<<<<<<< HEAD
-	transfer, err := testQueries.CreateTransfer(context.Background(), arg)
-=======
 	transfer, err := testStore.CreateTransfer(context.Background(), arg)
->>>>>>> d4d0e58 (refactor)
 	require.NoError(t, err)
 	require.NotEmpty(t, transfer)
 
@@ -33,10 +29,7 @@ func createRandomTransfer(t *testing.T, account1, account2 Account) Transfer {
 
 	return transfer
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> d4d0e58 (refactor)
 func TestCreateTransfer(t *testing.T) {
 	account1 := createRandomAccount(t)
 	account2 := createRandomAccount(t)
@@ -48,11 +41,7 @@ func TestGetTransfer(t *testing.T) {
 	account2 := createRandomAccount(t)
 	transfer1 := createRandomTransfer(t, account1, account2)
 
-<<<<<<< HEAD
-	transfer2, err := testQueries.GetTransfer(context.Background(), transfer1.ID)
-=======
 	transfer2, err := testStore.GetTransfer(context.Background(), transfer1.ID)
->>>>>>> d4d0e58 (refactor)
 	require.NoError(t, err)
 	require.NotEmpty(t, transfer2)
 
@@ -79,11 +68,7 @@ func TestListTransfer(t *testing.T) {
 		Offset:        5,
 	}
 
-<<<<<<< HEAD
-	transfers, err := testQueries.ListTransfers(context.Background(), arg)
-=======
 	transfers, err := testStore.ListTransfers(context.Background(), arg)
->>>>>>> d4d0e58 (refactor)
 	require.NoError(t, err)
 	require.Len(t, transfers, 5)
 

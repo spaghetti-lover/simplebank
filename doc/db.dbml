@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-Project simplebank {
-  database_type: 'PostgreSQL'
-  Note: '''
-    # Simplebank Database
-  '''
-}
-Table users as U {
-  username varchar [pk]
-  hashed_password varchar [not null]
-  fullname varchar [not null]
-  email varchar [unique, not null]
-  password_changed_at timestamptz [not null, default: `0001-01-01 00:00:00+00`]
-  created_at timestamptz [not null, default: `now()`]
-}
-=======
 Project simple_bank {
   database_type: 'PostgreSQL'
   Note: '''
@@ -42,18 +26,13 @@ Table verify_emails {
   expired_at timestamptz [not null, default: `now() + interval '15 minutes'`]
 }
 
->>>>>>> d4d0e58 (refactor)
 Table accounts as A {
   id bigserial [pk]
   owner varchar [ref: > U.username, not null]
   balance bigint [not null]
   currency varchar [not null]
   created_at timestamptz [not null, default: `now()`]
-<<<<<<< HEAD
-
-=======
   
->>>>>>> d4d0e58 (refactor)
   Indexes {
     owner
     (owner, currency) [unique]
@@ -61,18 +40,11 @@ Table accounts as A {
 }
 
 Table entries {
-<<<<<<< HEAD
-  id bigint [pk]
-  account_id bigint [ref: > A.id, not null]
-  amount bigint [not null, note: 'can be negative or positive']
-  created_at timestamptz [not null, default: `now()`]
-=======
   id bigserial [pk]
   account_id bigint [ref: > A.id, not null]
   amount bigint [not null, note: 'can be negative or positive']
   created_at timestamptz [not null, default: `now()`]
   
->>>>>>> d4d0e58 (refactor)
   Indexes {
     account_id
   }
@@ -84,36 +56,21 @@ Table transfers {
   to_account_id bigint [ref: > A.id, not null]
   amount bigint [not null, note: 'must be positive']
   created_at timestamptz [not null, default: `now()`]
-<<<<<<< HEAD
-
-=======
   
->>>>>>> d4d0e58 (refactor)
   Indexes {
     from_account_id
     to_account_id
     (from_account_id, to_account_id)
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> d4d0e58 (refactor)
 }
 
 Table sessions {
   id uuid [pk]
   username varchar [ref: > U.username, not null]
   refresh_token varchar [not null]
-<<<<<<< HEAD
-=======
   user_agent varchar [not null]
->>>>>>> d4d0e58 (refactor)
   client_ip varchar [not null]
   is_blocked boolean [not null, default: false]
   expires_at timestamptz [not null]
   created_at timestamptz [not null, default: `now()`]
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> d4d0e58 (refactor)

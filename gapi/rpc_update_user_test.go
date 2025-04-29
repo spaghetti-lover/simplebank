@@ -7,12 +7,12 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/jackc/pgx/v5/pgtype"
-	mockdb "github.com/spaghetti-lover/simplebank/db/mock"
-	db "github.com/spaghetti-lover/simplebank/db/sqlc"
-	"github.com/spaghetti-lover/simplebank/pb"
-	"github.com/spaghetti-lover/simplebank/token"
-	"github.com/spaghetti-lover/simplebank/util"
 	"github.com/stretchr/testify/require"
+	mockdb "github.com/techschool/simplebank/db/mock"
+	db "github.com/techschool/simplebank/db/sqlc"
+	"github.com/techschool/simplebank/pb"
+	"github.com/techschool/simplebank/token"
+	"github.com/techschool/simplebank/util"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

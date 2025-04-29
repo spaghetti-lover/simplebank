@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	db "github.com/spaghetti-lover/simplebank/db/sqlc"
-	"github.com/spaghetti-lover/simplebank/util"
 	"github.com/stretchr/testify/require"
+	db "github.com/techschool/simplebank/db/sqlc"
+	"github.com/techschool/simplebank/util"
 )
 
 func newTestServer(t *testing.T, store db.Store) *Server {
@@ -25,9 +25,6 @@ func newTestServer(t *testing.T, store db.Store) *Server {
 
 func TestMain(m *testing.M) {
 	gin.SetMode(gin.TestMode)
-<<<<<<< HEAD
-=======
 
->>>>>>> d4d0e58 (refactor)
 	os.Exit(m.Run())
 }

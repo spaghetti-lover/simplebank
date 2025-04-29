@@ -1,17 +1,13 @@
 package api
 
 import (
-<<<<<<< HEAD
-	"database/sql"
-=======
->>>>>>> d4d0e58 (refactor)
 	"errors"
 	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	db "github.com/spaghetti-lover/simplebank/db/sqlc"
-	"github.com/spaghetti-lover/simplebank/token"
+	db "github.com/techschool/simplebank/db/sqlc"
+	"github.com/techschool/simplebank/token"
 )
 
 type transferRequest struct {
@@ -27,10 +23,7 @@ func (server *Server) createTransfer(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> d4d0e58 (refactor)
 	fromAccount, valid := server.validAccount(ctx, req.FromAccountID, req.Currency)
 	if !valid {
 		return
@@ -47,10 +40,7 @@ func (server *Server) createTransfer(ctx *gin.Context) {
 	if !valid {
 		return
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> d4d0e58 (refactor)
 	arg := db.TransferTxParams{
 		FromAccountID: req.FromAccountID,
 		ToAccountID:   req.ToAccountID,
@@ -69,11 +59,7 @@ func (server *Server) createTransfer(ctx *gin.Context) {
 func (server *Server) validAccount(ctx *gin.Context, accountID int64, currency string) (db.Account, bool) {
 	account, err := server.store.GetAccount(ctx, accountID)
 	if err != nil {
-<<<<<<< HEAD
-		if err == sql.ErrNoRows {
-=======
 		if errors.Is(err, db.ErrRecordNotFound) {
->>>>>>> d4d0e58 (refactor)
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
 			return account, false
 		}
@@ -87,9 +73,6 @@ func (server *Server) validAccount(ctx *gin.Context, accountID int64, currency s
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return account, false
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> d4d0e58 (refactor)
 	return account, true
 }

@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/spaghetti-lover/simplebank/token"
+	"github.com/techschool/simplebank/token"
 )
 
 const (
@@ -26,20 +26,14 @@ func authMiddleware(tokenMaker token.Maker) gin.HandlerFunc {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, errorResponse(err))
 			return
 		}
-<<<<<<< HEAD
-=======
 
->>>>>>> d4d0e58 (refactor)
 		fields := strings.Fields(authorizationHeader)
 		if len(fields) < 2 {
 			err := errors.New("invalid authorization header format")
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, errorResponse(err))
 			return
 		}
-<<<<<<< HEAD
-=======
 
->>>>>>> d4d0e58 (refactor)
 		authorizationType := strings.ToLower(fields[0])
 		if authorizationType != authorizationTypeBearer {
 			err := fmt.Errorf("unsupported authorization type %s", authorizationType)
@@ -48,11 +42,7 @@ func authMiddleware(tokenMaker token.Maker) gin.HandlerFunc {
 		}
 
 		accessToken := fields[1]
-<<<<<<< HEAD
-		payload, err := tokenMaker.VerifyToken(accessToken)
-=======
 		payload, err := tokenMaker.VerifyToken(accessToken, token.TokenTypeAccessToken)
->>>>>>> d4d0e58 (refactor)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, errorResponse(err))
 			return

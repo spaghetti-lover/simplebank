@@ -4,13 +4,13 @@ metadata:
   name: letsencrypt
 spec:
   acme:
-    email: spaghetti-lover.guru@gmail.com
+    email: techschool.guru@gmail.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # Secret resource that will be used to store the account's private key.
       name: letsencrypt-account-private-key
     # Add a single challenge solver, HTTP01 using nginx
     solvers:
-      - http01:
-          ingress:
-            ingressClassName: nginx
+    - http01:
+        ingress:
+          ingressClassName: nginx

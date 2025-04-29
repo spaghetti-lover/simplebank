@@ -1,12 +1,12 @@
 # Simple Bank
 
-This repository contains the codes of the [Backend Master Class](https://bit.ly/backendmaster) course by [TECH SCHOOL](https://bit.ly/m/spaghetti-lover).
+This repository contains the codes of the [Backend Master Class](https://bit.ly/backendmaster) course by [TECH SCHOOL](https://bit.ly/m/techschool).
 
 ![Backend master class](backend-master.png)
 
 You can also find it on Udemy at [this link](https://bit.ly/backendudemy).
 
-And don't hesitate to [join Tech School's Discord group](https://bit.ly/spaghetti-loverdc) to chat directly with me and other students.
+And don't hesitate to [join Tech School's Discord group](https://bit.ly/techschooldc) to chat directly with me and other students.
 
 In this course, you will learn step-by-step how to design, develop and deploy a backend web service from scratch. I believe the best way to learn programming is to build a real application. Therefore, throughout the course, you will learn how to build a backend web service for a simple bank. It will provide APIs for the frontend to do the following things:
 
@@ -241,7 +241,7 @@ The service that we’re going to build is a simple bank. It will provide APIs f
   make db_docs
   ```
 
-- Access the DB documentation at [this address](https://dbdocs.io/spaghetti-lover.guru/simple_bank). Password: `secret`
+- Access the DB documentation at [this address](https://dbdocs.io/techschool.guru/simple_bank). Password: `secret`
 
 ### How to generate code
 
