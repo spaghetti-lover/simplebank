@@ -1,36 +1,6 @@
 package main
 
 import (
-<<<<<<< HEAD
-	"database/sql"
-	"log"
-
-	_ "github.com/lib/pq"
-	"github.com/spaghetti-lover/simplebank/api"
-	db "github.com/spaghetti-lover/simplebank/db/sqlc"
-	"github.com/spaghetti-lover/simplebank/util"
-)
-
-func main() {
-	config, err := util.LoadConfig(".")
-	if err != nil {
-		log.Fatal("cannot load config:", err)
-	}
-	conn, err := sql.Open(config.DBDriver, config.DBSource)
-	if err != nil {
-		log.Fatal("cannot connect to db:", err)
-	}
-
-	store := db.NewStore(conn)
-	server, err := api.NewServer(config, store)
-	if err != nil {
-		log.Fatal("cannot create server:", err)
-	}
-
-	err = server.Start(config.ServerAddress)
-	if err != nil {
-		log.Fatal("cannot start server:", err)
-=======
 	"context"
 	"errors"
 	"net"
@@ -297,6 +267,5 @@ func runGinServer(config util.Config, store db.Store) {
 	err = server.Start(config.HTTPServerAddress)
 	if err != nil {
 		log.Fatal().Err(err).Msg("cannot start server")
->>>>>>> d4d0e58 (refactor)
 	}
 }

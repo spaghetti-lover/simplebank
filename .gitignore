@@ -1,6 +1,2 @@
-<<<<<<< HEAD
-*.log
-=======
 *.log
 .vscode
->>>>>>> d4d0e58 (refactor)
