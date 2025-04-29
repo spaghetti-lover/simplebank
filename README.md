@@ -59,5 +59,7 @@ flowchart TD
    ](doc/07_configuration_management_.md)
 8. [Application Orchestration & Entrypoint
    ](doc/08_application_orchestration___entrypoint_.md)
+9. [Database Design
+   ](doc/09_database_design.md)
 
 ---
