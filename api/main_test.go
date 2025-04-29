@@ -25,5 +25,9 @@ func newTestServer(t *testing.T, store db.Store) *Server {
 
 func TestMain(m *testing.M) {
 	gin.SetMode(gin.TestMode)
+<<<<<<< HEAD
+=======
+
+>>>>>>> d4d0e58 (refactor)
 	os.Exit(m.Run())
 }

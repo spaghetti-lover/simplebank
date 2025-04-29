@@ -5,7 +5,11 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+<<<<<<< HEAD
 	"io/ioutil"
+=======
+	"io"
+>>>>>>> d4d0e58 (refactor)
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -35,7 +39,11 @@ func TestGetAccountAPI(t *testing.T) {
 			name:      "OK",
 			accountID: account.ID,
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -43,7 +51,10 @@ func TestGetAccountAPI(t *testing.T) {
 					Times(1).
 					Return(account, nil)
 			},
+<<<<<<< HEAD
 
+=======
+>>>>>>> d4d0e58 (refactor)
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusOK, recorder.Code)
 				requireBodyMatchAccount(t, recorder.Body, account)
@@ -53,7 +64,11 @@ func TestGetAccountAPI(t *testing.T) {
 			name:      "UnauthorizedUser",
 			accountID: account.ID,
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, "unauthorized_user", time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, "unauthorized_user", util.DepositorRole, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -83,14 +98,22 @@ func TestGetAccountAPI(t *testing.T) {
 			name:      "NotFound",
 			accountID: account.ID,
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
 					GetAccount(gomock.Any(), gomock.Eq(account.ID)).
 					Times(1).
+<<<<<<< HEAD
 					Return(db.Account{}, sql.ErrNoRows)
+=======
+					Return(db.Account{}, db.ErrRecordNotFound)
+>>>>>>> d4d0e58 (refactor)
 			},
 			checkResponse: func(t *testing.T, recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusNotFound, recorder.Code)
@@ -100,7 +123,11 @@ func TestGetAccountAPI(t *testing.T) {
 			name:      "InternalError",
 			accountID: account.ID,
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -116,7 +143,11 @@ func TestGetAccountAPI(t *testing.T) {
 			name:      "InvalidID",
 			accountID: 0,
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -131,12 +162,20 @@ func TestGetAccountAPI(t *testing.T) {
 
 	for i := range testCases {
 		tc := testCases[i]
+<<<<<<< HEAD
+=======
+
+>>>>>>> d4d0e58 (refactor)
 		t.Run(tc.name, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
 			store := mockdb.NewMockStore(ctrl)
 			tc.buildStubs(store)
+<<<<<<< HEAD
+=======
+
+>>>>>>> d4d0e58 (refactor)
 			server := newTestServer(t, store)
 			recorder := httptest.NewRecorder()
 
@@ -168,7 +207,11 @@ func TestCreateAccountAPI(t *testing.T) {
 				"currency": account.Currency,
 			},
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				arg := db.CreateAccountParams{
@@ -209,7 +252,11 @@ func TestCreateAccountAPI(t *testing.T) {
 				"currency": account.Currency,
 			},
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -227,7 +274,11 @@ func TestCreateAccountAPI(t *testing.T) {
 				"currency": "invalid",
 			},
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -296,7 +347,11 @@ func TestListAccountsAPI(t *testing.T) {
 				pageSize: n,
 			},
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				arg := db.ListAccountsParams{
@@ -339,7 +394,11 @@ func TestListAccountsAPI(t *testing.T) {
 				pageSize: n,
 			},
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -358,7 +417,11 @@ func TestListAccountsAPI(t *testing.T) {
 				pageSize: n,
 			},
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -376,7 +439,11 @@ func TestListAccountsAPI(t *testing.T) {
 				pageSize: 100000,
 			},
 			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+<<<<<<< HEAD
 				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, time.Minute)
+=======
+				addAuthorization(t, request, tokenMaker, authorizationTypeBearer, user.Username, user.Role, time.Minute)
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -429,7 +496,11 @@ func randomAccount(owner string) db.Account {
 }
 
 func requireBodyMatchAccount(t *testing.T, body *bytes.Buffer, account db.Account) {
+<<<<<<< HEAD
 	data, err := ioutil.ReadAll(body)
+=======
+	data, err := io.ReadAll(body)
+>>>>>>> d4d0e58 (refactor)
 	require.NoError(t, err)
 
 	var gotAccount db.Account
@@ -439,7 +510,11 @@ func requireBodyMatchAccount(t *testing.T, body *bytes.Buffer, account db.Accoun
 }
 
 func requireBodyMatchAccounts(t *testing.T, body *bytes.Buffer, accounts []db.Account) {
+<<<<<<< HEAD
 	data, err := ioutil.ReadAll(body)
+=======
+	data, err := io.ReadAll(body)
+>>>>>>> d4d0e58 (refactor)
 	require.NoError(t, err)
 
 	var gotAccounts []db.Account

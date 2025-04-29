@@ -2,18 +2,43 @@ name: Run unit tests
 
 on:
   push:
+<<<<<<< HEAD
     branches: [main]
   pull_request:
     branches: [main]
 
 jobs:
+=======
+<<<<<<< HEAD
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+=======
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+>>>>>>> 822a24b (Run and deploy)
+>>>>>>> d4d0e58 (refactor)
   test:
     name: Test
     runs-on: ubuntu-latest
 
     services:
       postgres:
+<<<<<<< HEAD
         image: postgres:12-alpine
+=======
+<<<<<<< HEAD
+        image: postgres:14-alpine
+=======
+        image: postgres:12-alpine
+>>>>>>> 822a24b (Run and deploy)
+>>>>>>> d4d0e58 (refactor)
         env:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: secret
@@ -27,10 +52,18 @@ jobs:
           --health-retries 5
 
     steps:
+<<<<<<< HEAD
       - name: Set up Go 1.x
         uses: actions/setup-go@v2
         with:
           go-version: ^1.16
+=======
+<<<<<<< HEAD
+      - name: Set up Go 1.x
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.22
+>>>>>>> d4d0e58 (refactor)
         id: go
 
       - name: Check out code into the Go module directory
@@ -47,3 +80,29 @@ jobs:
 
       - name: Test
         run: make test
+<<<<<<< HEAD
+=======
+=======
+
+    - name: Set up Go 1.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: ^1.16
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Install golang-migrate
+      run: |
+        curl -L https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migrate.linux-amd64.tar.gz | tar xvz
+        sudo mv migrate.linux-amd64 /usr/bin/migrate
+        which migrate
+
+    - name: Run migrations
+      run: make migrateup
+
+    - name: Test
+      run: make test
+>>>>>>> 822a24b (Run and deploy)
+>>>>>>> d4d0e58 (refactor)

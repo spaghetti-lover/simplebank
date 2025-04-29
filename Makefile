@@ -4,16 +4,27 @@ network:
 	docker network create bank-network
 
 postgres:
+<<<<<<< HEAD
 	docker run --name postgres12 --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
+=======
+	docker run --name postgres --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:14-alpine
+>>>>>>> d4d0e58 (refactor)
 
 mysql:
 	docker run --name mysql8 -p 3306:3306  -e MYSQL_ROOT_PASSWORD=secret -d mysql:8
 
 createdb:
+<<<<<<< HEAD
 	docker exec -it postgres12 createdb --username=root --owner=root simple_bank
 
 dropdb:
 	docker exec -it postgres12 dropdb simple_bank
+=======
+	docker exec -it postgres createdb --username=root --owner=root simple_bank
+
+dropdb:
+	docker exec -it postgres dropdb simple_bank
+>>>>>>> d4d0e58 (refactor)
 
 migrateup:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up
@@ -27,6 +38,12 @@ migratedown:
 migratedown1:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down 1
 
+<<<<<<< HEAD
+=======
+new_migration:
+	migrate create -ext sql -dir db/migration -seq $(name)
+
+>>>>>>> d4d0e58 (refactor)
 db_docs:
 	dbdocs build doc/db.dbml
 
@@ -37,12 +54,38 @@ sqlc:
 	sqlc generate
 
 test:
+<<<<<<< HEAD
 	go test -v -cover ./...
+=======
+	go test -v -cover -short ./...
+>>>>>>> d4d0e58 (refactor)
 
 server:
 	go run main.go
 
 mock:
 	mockgen -package mockdb -destination db/mock/store.go github.com/spaghetti-lover/simplebank/db/sqlc Store
+<<<<<<< HEAD
 
 .PHONY: network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 db_docs db_schema sqlc test server mock
+=======
+	mockgen -package mockwk -destination worker/mock/distributor.go github.com/spaghetti-lover/simplebank/worker TaskDistributor
+
+proto:
+	rm -f pb/*.go
+	rm -f doc/swagger/*.swagger.json
+	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
+	--go-grpc_out=pb --go-grpc_opt=paths=source_relative \
+	--grpc-gateway_out=pb --grpc-gateway_opt=paths=source_relative \
+	--openapiv2_out=doc/swagger --openapiv2_opt=allow_merge=true,merge_file_name=simple_bank \
+	proto/*.proto
+	statik -src=./doc/swagger -dest=./doc
+
+evans:
+	evans --host localhost --port 9090 -r repl
+
+redis:
+	docker run --name redis -p 6379:6379 -d redis:7-alpine
+
+.PHONY: network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration db_docs db_schema sqlc test server mock proto evans redis
+>>>>>>> d4d0e58 (refactor)

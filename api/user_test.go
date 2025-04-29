@@ -5,7 +5,11 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+<<<<<<< HEAD
 	"io/ioutil"
+=======
+	"io"
+>>>>>>> d4d0e58 (refactor)
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -13,7 +17,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
+<<<<<<< HEAD
 	"github.com/lib/pq"
+=======
+>>>>>>> d4d0e58 (refactor)
 	mockdb "github.com/spaghetti-lover/simplebank/db/mock"
 	db "github.com/spaghetti-lover/simplebank/db/sqlc"
 	"github.com/spaghetti-lover/simplebank/util"
@@ -111,7 +118,11 @@ func TestCreateUserAPI(t *testing.T) {
 				store.EXPECT().
 					CreateUser(gomock.Any(), gomock.Any()).
 					Times(1).
+<<<<<<< HEAD
 					Return(db.User{}, &pq.Error{Code: "23505"})
+=======
+					Return(db.User{}, db.ErrUniqueViolation)
+>>>>>>> d4d0e58 (refactor)
 			},
 			checkResponse: func(recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusForbidden, recorder.Code)
@@ -169,6 +180,10 @@ func TestCreateUserAPI(t *testing.T) {
 			},
 		},
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> d4d0e58 (refactor)
 	for i := range testCases {
 		tc := testCases[i]
 
@@ -234,7 +249,11 @@ func TestLoginUserAPI(t *testing.T) {
 				store.EXPECT().
 					GetUser(gomock.Any(), gomock.Any()).
 					Times(1).
+<<<<<<< HEAD
 					Return(db.User{}, sql.ErrNoRows)
+=======
+					Return(db.User{}, db.ErrRecordNotFound)
+>>>>>>> d4d0e58 (refactor)
 			},
 			checkResponse: func(recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusNotFound, recorder.Code)
@@ -275,10 +294,15 @@ func TestLoginUserAPI(t *testing.T) {
 		{
 			name: "InvalidUsername",
 			body: gin.H{
+<<<<<<< HEAD
 				"username":  "invalid-user#1",
 				"password":  password,
 				"full_name": user.FullName,
 				"email":     user.Email,
+=======
+				"username": "invalid-user#1",
+				"password": password,
+>>>>>>> d4d0e58 (refactor)
 			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
@@ -333,7 +357,11 @@ func randomUser(t *testing.T) (user db.User, password string) {
 }
 
 func requireBodyMatchUser(t *testing.T, body *bytes.Buffer, user db.User) {
+<<<<<<< HEAD
 	data, err := ioutil.ReadAll(body)
+=======
+	data, err := io.ReadAll(body)
+>>>>>>> d4d0e58 (refactor)
 	require.NoError(t, err)
 
 	var gotUser db.User

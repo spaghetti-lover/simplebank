@@ -8,6 +8,7 @@ INSERT INTO sessions (
   is_blocked,
   expires_at
 ) VALUES (
+<<<<<<< HEAD
   $1,
   $2,
   $3,
@@ -19,3 +20,11 @@ INSERT INTO sessions (
 
 -- name: GetSession :one
 SELECT * FROM sessions WHERE id = $1 LIMIT 1;
+=======
+  $1, $2, $3, $4, $5, $6, $7
+) RETURNING *;
+
+-- name: GetSession :one
+SELECT * FROM sessions
+WHERE id = $1 LIMIT 1;
+>>>>>>> d4d0e58 (refactor)

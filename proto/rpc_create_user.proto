@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+<<<<<<< HEAD
 package db;
 import "user.proto";
 option go_package = "github.com/spaghetti-lover/simplebank/db";
@@ -14,3 +15,21 @@ message CreateUserRequest {
 message CreateUserResponse {
   User user = 1;
 }
+=======
+package pb;
+
+import "user.proto";
+
+option go_package = "github.com/spaghetti-lover/simplebank/pb";
+
+message CreateUserRequest {
+    string username = 1;
+    string full_name = 2;
+    string email = 3;
+    string password = 4;
+}
+
+message CreateUserResponse {
+    User user = 1;
+}
+>>>>>>> d4d0e58 (refactor)
