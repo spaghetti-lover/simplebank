@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/techschool/simplebank/token"
+	"github.com/spaghetti-lover/simplebank/token"
 	"google.golang.org/grpc/metadata"
 )
 
