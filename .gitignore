@@ -1,2 +1,4 @@
 *.log
 .vscode
+app.env
+.env
